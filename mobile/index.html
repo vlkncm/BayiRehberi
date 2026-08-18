@@ -57,6 +57,7 @@
       <dl id="detailFields"></dl>
       <div class="dialog-actions">
         <button id="deleteButton" class="danger" type="button">Bayiyi sil</button>
+        <button id="editButton" class="primary" type="button">Düzenle</button>
         <button type="button" data-close>Kapat</button>
       </div>
     </article>
@@ -65,14 +66,14 @@
   <dialog id="addDialog">
     <form id="addForm" class="dialog-card">
       <button class="close" type="button" data-close aria-label="Kapat">×</button>
-      <span class="eyebrow">YENİ KAYIT</span>
-      <h2>Yeni bayi ekle</h2>
+      <span id="formEyebrow" class="eyebrow">YENİ KAYIT</span>
+      <h2 id="formTitle">Yeni bayi ekle</h2>
       <label>Bayi / firma adı <input name="name" required maxlength="120"></label>
       <label>İl <input name="city" required maxlength="60"></label>
       <label>İlçe <input name="district" maxlength="60"></label>
       <label>Telefon <input name="phone" inputmode="tel" maxlength="30"></label>
       <label>Adres <textarea name="address" rows="3" maxlength="300"></textarea></label>
-      <div class="dialog-actions"><button type="button" data-close>Vazgeç</button><button class="primary" type="submit">Kaydet</button></div>
+      <div class="dialog-actions"><button type="button" data-close>Vazgeç</button><button id="saveButton" class="primary" type="submit">Kaydet</button></div>
     </form>
   </dialog>
 
