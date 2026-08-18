@@ -7,6 +7,11 @@
   <title>Bayi Rehberi</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .toolbar select{width:100%;border:1px solid #cbd7dc;border-radius:10px;padding:12px;font:inherit;background:#fff;margin-bottom:12px;outline:none}
+    .toolbar select:focus{border-color:#155c75;box-shadow:0 0 0 3px #155c7518}
+    .toolbar label+input{margin-bottom:12px}
+  </style>
 </head>
 <body>
   <header>
@@ -16,8 +21,12 @@
 
   <main>
     <section class="toolbar">
-      <label for="search">Bayi ara</label>
-      <input id="search" type="search" placeholder="Bayi, il, ilçe veya telefon">
+      <label for="cityFilter">İle göre ara</label>
+      <select id="cityFilter">
+        <option value="">Tüm iller</option>
+      </select>
+      <label for="search">Bayi adına göre ara</label>
+      <input id="search" type="search" placeholder="Bayi adını yazın">
       <div class="summary"><b id="count">0</b> bayi gösteriliyor</div>
     </section>
     <section id="list" class="dealer-list" aria-live="polite"></section>
