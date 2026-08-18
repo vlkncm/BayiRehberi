@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#172636">
+  <title>Bayi Rehberi</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="../saatDunyasiLogo.jpg" alt="Saat Dünyası">
+    <div><small>MOBİL</small><h1>Bayi Rehberi</h1></div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <label for="search">Bayi ara</label>
+      <input id="search" type="search" placeholder="Bayi, il, ilçe veya telefon">
+      <div class="summary"><b id="count">0</b> bayi gösteriliyor</div>
+    </section>
+    <section id="list" class="dealer-list" aria-live="polite"></section>
+    <p id="empty" class="empty" hidden>Kayıt bulunamadı.</p>
+  </main>
+
+  <button id="addButton" class="fab" type="button" aria-label="Yeni bayi ekle">+</button>
+
+  <dialog id="detailDialog">
+    <article class="dialog-card">
+      <button class="close" type="button" data-close aria-label="Kapat">×</button>
+      <span class="eyebrow">BAYİ BİLGİLERİ</span>
+      <h2 id="detailName"></h2>
+      <dl id="detailFields"></dl>
+      <div class="dialog-actions">
+        <button id="deleteButton" class="danger" type="button">Bayiyi sil</button>
+        <button type="button" data-close>Kapat</button>
+      </div>
+    </article>
+  </dialog>
+
+  <dialog id="addDialog">
+    <form id="addForm" class="dialog-card">
+      <button class="close" type="button" data-close aria-label="Kapat">×</button>
+      <span class="eyebrow">YENİ KAYIT</span>
+      <h2>Yeni bayi ekle</h2>
+      <label>Bayi / firma adı <input name="name" required maxlength="120"></label>
+      <label>İl <input name="city" required maxlength="60"></label>
+      <label>İlçe <input name="district" maxlength="60"></label>
+      <label>Telefon <input name="phone" inputmode="tel" maxlength="30"></label>
+      <label>Adres <textarea name="address" rows="3" maxlength="300"></textarea></label>
+      <div class="dialog-actions"><button type="button" data-close>Vazgeç</button><button class="primary" type="submit">Kaydet</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
