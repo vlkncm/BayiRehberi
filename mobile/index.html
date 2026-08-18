@@ -8,9 +8,13 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
   <style>
-    .toolbar select{width:100%;border:1px solid #cbd7dc;border-radius:10px;padding:12px;font:inherit;background:#fff;margin-bottom:12px;outline:none}
-    .toolbar select:focus{border-color:#155c75;box-shadow:0 0 0 3px #155c7518}
-    .toolbar label+input{margin-bottom:12px}
+    .toolbar-title{margin:0 0 4px;font-size:20px}.toolbar-copy{margin:0 0 16px;color:#687982;font-size:13px}
+    .city-picker{width:100%;display:flex;justify-content:space-between;align-items:center;border:1px solid #b9ccd3;border-radius:12px;padding:14px;background:#f7fafb;color:#172636;font:inherit;font-weight:750;text-align:left;margin-bottom:15px}
+    .city-picker span{color:#155c75}.city-picker b{font-size:20px}.toolbar label+input{margin-bottom:4px}
+    .city-dialog-card{padding:22px 18px}.city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:16px}
+    .city-option{border:1px solid #dbe4e8;border-radius:11px;background:#f7fafb;padding:13px 8px;font:inherit;font-weight:650;color:#172636}
+    .city-option.active{background:#155c75;border-color:#155c75;color:#fff}.city-option:first-child{grid-column:1/-1}
+    @media(min-width:460px){.city-grid{grid-template-columns:repeat(3,1fr)}.city-option:first-child{grid-column:1/-1}}
   </style>
 </head>
 <body>
@@ -21,10 +25,9 @@
 
   <main>
     <section class="toolbar">
-      <label for="cityFilter">İle göre ara</label>
-      <select id="cityFilter">
-        <option value="">Tüm iller</option>
-      </select>
+      <h2 class="toolbar-title">Bayinizi bulun</h2>
+      <p class="toolbar-copy">Önce il seçin, ardından bayi adına göre arayın.</p>
+      <button id="cityPicker" class="city-picker" type="button"><span id="selectedCity">İl seçin</span><b>›</b></button>
       <label for="search">Bayi adına göre ara</label>
       <input id="search" type="search" placeholder="Bayi adını yazın">
       <div class="summary"><b id="count">0</b> bayi gösteriliyor</div>
@@ -34,6 +37,15 @@
   </main>
 
   <button id="addButton" class="fab" type="button" aria-label="Yeni bayi ekle">+</button>
+
+  <dialog id="cityDialog">
+    <article class="dialog-card city-dialog-card">
+      <button class="close" type="button" data-close aria-label="Kapat">×</button>
+      <span class="eyebrow">KONUMA GÖRE FİLTRELE</span>
+      <h2>İl seçin</h2>
+      <div id="cityList" class="city-grid"></div>
+    </article>
+  </dialog>
 
   <dialog id="detailDialog">
     <article class="dialog-card">
