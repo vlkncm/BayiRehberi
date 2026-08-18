@@ -1,6 +1,6 @@
 const STORAGE_KEY='bayi-rehberi-mobile-v1';
 const $=id=>document.getElementById(id);
-let dealers=[],selectedId=null;
+let dealers=[],selectedId=null,selectedCity='';
 
 const clean=value=>String(value||'').trim();
 const escapeHtml=value=>clean(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
@@ -20,15 +20,13 @@ async function load(){
 }
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(dealers))}
 function renderCities(){
-  const select=$('cityFilter');
-  const selected=select.value;
   const cities=[...new Set(dealers.map(d=>clean(d.city)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));
-  select.innerHTML='<option value="">Tüm iller</option>'+cities.map(city=>`<option value="${escapeHtml(city)}">${escapeHtml(city)}</option>`).join('');
-  if(cities.includes(selected))select.value=selected;
+  $('cityList').innerHTML=`<button class="city-option ${selectedCity?'':'active'}" type="button" data-city="">Tüm iller</button>`+cities.map(city=>`<button class="city-option ${city===selectedCity?'active':''}" type="button" data-city="${escapeHtml(city)}">${escapeHtml(city)}</button>`).join('');
+  $('selectedCity').textContent=selectedCity||'İl seçin';
 }
 function render(){
   const q=clean($('search').value).toLocaleLowerCase('tr-TR');
-  const city=clean($('cityFilter').value).toLocaleLowerCase('tr-TR');
+  const city=selectedCity.toLocaleLowerCase('tr-TR');
   const shown=dealers.filter(d=>(!city||clean(d.city).toLocaleLowerCase('tr-TR')===city)&&clean(d.name).toLocaleLowerCase('tr-TR').includes(q)).sort((a,b)=>a.name.localeCompare(b.name,'tr'));
   $('count').textContent=shown.length;$('empty').hidden=shown.length>0;
   $('list').innerHTML=shown.map(d=>`<button class="dealer" data-id="${escapeHtml(d.id)}"><strong>${escapeHtml(d.name)}</strong><span>${escapeHtml([d.district,d.city].filter(Boolean).join(' / ')||'Konum belirtilmemiş')}</span><span>${escapeHtml(d.phone||'Telefon belirtilmemiş')}</span></button>`).join('');
@@ -39,7 +37,8 @@ function showDetail(id){
   $('detailDialog').showModal();
 }
 $('search').addEventListener('input',render);
-$('cityFilter').addEventListener('change',render);
+$('cityPicker').addEventListener('click',()=>{$('cityDialog').showModal()});
+$('cityList').addEventListener('click',e=>{const option=e.target.closest('[data-city]');if(!option)return;selectedCity=option.dataset.city;renderCities();render();$('cityDialog').close()});
 $('list').addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(card)showDetail(card.dataset.id)});
 $('addButton').addEventListener('click',()=>{$('addForm').reset();$('addDialog').showModal()});
 document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>button.closest('dialog').close()));
